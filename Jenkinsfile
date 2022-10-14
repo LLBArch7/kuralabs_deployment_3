@@ -33,9 +33,11 @@ pipeline {
       agent{label 'awsDeploy'}
       steps {
         sh '''#!/bin/bash
-        if[[$(psaux|grep-i"gunicorn"|tr-s""|head-n1|cut -d""-f2)!=0]] then
-        psaux|grep-i"gunicorn"|tr-s""|head-n1|cut -d""-f2>pid.txt kill $(cat pid.txt)
-        exit 0
+        if[[$(psaux|grep-i"gunicorn"|tr-s""|head-n1|cut -d""-f2)!=0]]
+        then
+          psaux|grep-i"gunicorn"|tr-s""|head-n1|cut -d""-f2>pid.txt
+          kill $(cat pid.txt)
+          exit 0
        fi
         '''
       }
